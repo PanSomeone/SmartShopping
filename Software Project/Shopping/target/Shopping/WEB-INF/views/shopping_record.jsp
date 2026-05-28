@@ -33,6 +33,7 @@
                 <li class="list-group-item-diy"><a href="${cp}/shopping_car">🛒 购物车</a></li>
                 <li class="list-group-item-diy"><a href="${cp}/shopping_record" class="active">📋 我的订单</a></li>
                 <li class="list-group-item-diy"><a href="${cp}/amend_info">⚙️ 修改资料</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/main#weekly-report">📊 购物周报</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

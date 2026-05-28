@@ -271,7 +271,75 @@
         }
         .card-body .price::before { content:'\00a5'; font-size:14px; margin-right:1px; }
 
-        /* ---- AI 助手：右侧固定面板(不覆盖导航栏) ---- */
+        /* ---- AI 周报 Modal ---- */
+        .report-overlay {
+            position:fixed; inset:0; z-index:20000;
+            background:rgba(12,10,8,.92);
+            display:none; align-items:center; justify-content:center;
+            padding:40px 20px; overflow-y:auto;
+        }
+        .report-overlay.show { display:flex; animation:fadeIn .3s ease; }
+        @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+        .report-card {
+            background:linear-gradient(145deg, #1a2a2a 0%, #162020 50%, #0f1a1a 100%);
+            border:1px solid rgba(255,255,255,.06); border-radius:20px;
+            padding:20px 28px 32px; max-width:560px; width:100%; position:relative;
+            color:#e0eae6; box-shadow:0 20px 60px rgba(0,0,0,.4);
+            text-align:center;
+        }
+        .report-close {
+            position:absolute; top:12px; right:16px;
+            width:32px; height:32px; border-radius:50%;
+            background:rgba(255,255,255,.08); color:rgba(255,255,255,.6); border:none;
+            font-size:18px; cursor:pointer; transition:all .2s;
+            display:flex; align-items:center; justify-content:center;
+        }
+        .report-close:hover { background:rgba(255,255,255,.18); color:#fff; }
+        .report-card h2 { font-size:28px; font-weight:800; margin:0 0 4px; color:#fff; }
+        .report-card .subtitle { font-size:13px; color:#7a9e9e; margin-bottom:20px; }
+        .report-stats {
+            display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;
+        }
+        .report-stat {
+            background:rgba(255,255,255,.04); border-radius:12px;
+            padding:16px 12px; text-align:center;
+        }
+        .report-stat .val { font-size:26px; font-weight:800; color:#5eead4; }
+        .report-stat .lbl { font-size:12px; color:#7a9e9e; margin-top:4px; }
+        .report-title-badge {
+            display:inline-block; padding:8px 24px; border-radius:30px;
+            font-size:20px; font-weight:800; margin:12px 0;
+            background:linear-gradient(135deg, #5eead4, #2dd4bf);
+            color:#0f1a1a; letter-spacing:1px;
+        }
+        .report-comment {
+            font-size:15px; color:#c0d8d8; line-height:1.8; margin:0 0 20px;
+            max-width:420px; margin-left:auto; margin-right:auto;
+        }
+        .report-recommend {
+            display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+        }
+        .report-recommend span {
+            padding:8px 18px; border-radius:20px;
+            background:rgba(94,234,212,.12); color:#5eead4;
+            font-size:14px; font-weight:600; border:1px solid rgba(94,234,212,.2);
+        }
+        .report-open-btn {
+            display:inline-flex; align-items:center; gap:6px;
+            padding:8px 20px; border-radius:24px;
+            background:linear-gradient(135deg, #5eead4, #2dd4bf);
+            color:#0f1a1a; font-size:14px; font-weight:700;
+            cursor:pointer; border:none; transition:all .2s;
+        }
+        .report-open-btn:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(94,234,212,.3); }
+        .report-badge {
+            display:inline-block; padding:4px 14px; border-radius:20px;
+            font-size:11px; font-weight:700; background:rgba(94,234,212,.12);
+            color:#5eead4; border:1px solid rgba(94,234,212,.2);
+            margin-left:8px; vertical-align:middle;
+        }
+
+        /* ---- AI 抽屉面板 ---- */
         .ai-drawer {
             position:fixed; top:56px; right:0; z-index:999;
             height:calc(100vh - 56px); display:flex;
@@ -387,6 +455,17 @@
     <div class="hero-badges">
         <span>#零食</span><span>#饮料</span><span>#速食</span><span>#水果</span><span>#日用</span>
     </div>
+    <div style="margin-top:18px;position:relative;z-index:1;">
+        <button class="report-open-btn" onclick="openReport()">📊 查看我的购物周报</button>
+    </div>
+</div>
+
+<!-- ====== AI 周报弹窗 ====== -->
+<div class="report-overlay" id="reportOverlay">
+    <div class="report-card" id="reportCard">
+        <button class="report-close" onclick="closeReport()">✕</button>
+        <div style="padding:20px;text-align:center;color:#7a9e9e;">⏳ AI 正在分析你的购物数据...</div>
+    </div>
 </div>
 
 <!-- === 分类导航 === -->
@@ -444,6 +523,68 @@
 <script type="text/javascript">
     function toggleDrawer(){
         document.getElementById('aiDrawer').classList.toggle('open');
+    }
+
+    function openReport(){
+        var userId=${not empty currentUser ? currentUser.id : 0};
+        if(!userId){
+            layer.confirm('请先登录才能查看购物周报',{title:'提示',btn:['去登录','取消']},function(){
+                window.location.href='${cp}/login';
+            });
+            return;
+        }
+        var overlay=document.getElementById('reportOverlay');
+        overlay.classList.add('show');
+        var card=document.getElementById('reportCard');
+
+        card.innerHTML='<button class="report-close" onclick="closeReport()">✕</button>'+
+            '<h2>📊 正在生成购物周报</h2>'+
+            '<div class="subtitle" style="margin-bottom:28px;">AI 正在分析你的购物数据...</div>'+
+            '<div class="report-stats">'+
+            '<div class="report-stat"><div class="skeleton-pulse" style="height:28px;width:60%;margin:0 auto;border-radius:6px;background:rgba(255,255,255,.06);"></div><div class="skeleton-pulse" style="height:12px;width:40%;margin:8px auto 0;border-radius:4px;background:rgba(255,255,255,.04);"></div></div>'+
+            '<div class="report-stat"><div class="skeleton-pulse" style="height:28px;width:60%;margin:0 auto;border-radius:6px;background:rgba(255,255,255,.06);"></div><div class="skeleton-pulse" style="height:12px;width:40%;margin:8px auto 0;border-radius:4px;background:rgba(255,255,255,.04);"></div></div>'+
+            '<div class="report-stat"><div class="skeleton-pulse" style="height:28px;width:60%;margin:0 auto;border-radius:6px;background:rgba(255,255,255,.06);"></div><div class="skeleton-pulse" style="height:12px;width:40%;margin:8px auto 0;border-radius:4px;background:rgba(255,255,255,.04);"></div></div>'+
+            '<div class="report-stat"><div class="skeleton-pulse" style="height:28px;width:60%;margin:0 auto;border-radius:6px;background:rgba(255,255,255,.06);"></div><div class="skeleton-pulse" style="height:12px;width:40%;margin:8px auto 0;border-radius:4px;background:rgba(255,255,255,.04);"></div></div>'+
+            '</div>'+
+            '<style>.skeleton-pulse{animation:skeletonShimmer 1.6s ease-in-out infinite;}@keyframes skeletonShimmer{0%,100%{opacity:.3;}50%{opacity:.8;}}</style>';
+
+        $.ajax({
+            type:'POST', url:'${cp}/weeklyReport', dataType:'json', timeout:30000,
+            success:function(res){
+                if(!res.success){
+                    card.innerHTML='<button class="report-close" onclick="closeReport()">✕</button><div style="padding:32px;text-align:center;"><div style="font-size:48px;margin-bottom:16px;">📭</div><div style="color:#7a9e9e;font-size:16px;">'+res.message+'</div></div>';
+                    return;
+                }
+                var r=res.report;
+                if(!r){
+                    card.innerHTML='<button class="report-close" onclick="closeReport()">✕</button><div style="padding:32px;text-align:center;"><div style="font-size:48px;margin-bottom:16px;">📭</div><div style="color:#7a9e9e;font-size:16px;">本周暂无购物记录<br>先去买点东西吧~</div></div>';
+                    return;
+                }
+                var recs=(r.recommend||[]).map(function(x){ return '<span>'+x+'</span>'; }).join('');
+                var cachedLabel=res.cached?'<span class="report-badge">已缓存</span>':'';
+                var limitLabel=res.limitReached?'<span class="report-badge" style="background:rgba(240,100,80,.12);color:#f06450;border-color:rgba(240,100,80,.2);">已达上限</span>':'';
+                card.innerHTML=
+                    '<button class="report-close" onclick="closeReport()">✕</button>'+
+                    '<h2>📊 你的本周购物画像 '+cachedLabel+limitLabel+'</h2>'+
+                    '<div class="subtitle">📅 '+(r.date_range||'本周')+' · '+(r.peak_day||'')+' · '+(r.peak_hour||'')+'</div>'+
+                    '<div class="report-stats">'+
+                    '<div class="report-stat"><div class="val">'+(r.total_items||0)+'</div><div class="lbl">购买总量</div></div>'+
+                    '<div class="report-stat"><div class="val">¥'+(r.total_spent||0)+'</div><div class="lbl">总花费</div></div>'+
+                    '<div class="report-stat"><div class="val">'+(r.top_category||'--')+'</div><div class="lbl">最爱品类</div></div>'+
+                    '<div class="report-stat"><div class="val">'+(r.peak_hour||'--')+'</div><div class="lbl">下单高峰</div></div>'+
+                    '</div>'+
+                    '<div class="report-title-badge">🏆 '+(r.title||'购物达人')+'</div>'+
+                    '<p class="report-comment">💬 '+(r.comment||'')+'</p>'+
+                    ((r.health_tip)?'<p style="font-size:14px;color:#f0c060;margin:0 0 16px;line-height:1.6;">💚 '+(r.health_tip||'')+'</p>':'')+
+                    (recs?'<div class="report-recommend">'+recs+'</div>':'');
+            },
+            error:function(xhr,status){
+                card.innerHTML='<button class="report-close" onclick="closeReport()">✕</button><div style="padding:32px;text-align:center;"><div style="font-size:48px;margin-bottom:16px;">🔧</div><div style="color:#e07a5f;font-size:15px;">周报生成失败<br><span style="font-size:12px;color:#7a9e9e;">'+(status==='timeout'?'AI响应超时':'服务器异常')+'</span></div></div>';
+            }
+        });
+    }
+    function closeReport(){
+        document.getElementById('reportOverlay').classList.remove('show');
     }
 
     // ============================================================
@@ -863,6 +1004,12 @@
             cats.forEach(function(c,i){ c.classList.toggle('active',i===cur); });
         });
     })();
+
+    // 从其他页面跳转来的周报自动打开
+    if(window.location.hash==='#weekly-report'){
+        history.replaceState(null,null,' ');
+        setTimeout(function(){ if(typeof openReport==='function') openReport(); },600);
+    }
 </script>
 
 </body>
