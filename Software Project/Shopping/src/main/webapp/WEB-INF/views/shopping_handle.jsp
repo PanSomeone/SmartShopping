@@ -27,13 +27,19 @@
 <!-- 中间内容 -->
 <div class="container-fluid bigHead">
     <div class="row">
-        <div class="col-sm-10  col-md-10 col-sm-offset-1 col-md-offset-1">
+        <div class="col-sm-3 col-md-2 sidebar sidebar-1">
+            <ul class="nav nav-sidebar">
+                <li class="list-group-item-diy"><a href="${cp}/main">🏠 返回首页</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/shopping_handle" class="active">📦 处理订单</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/bossControl">📊 商品管理</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/amend_info">⚙️ 修改资料</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="jumbotron">
                 <h1>欢迎来到订单处理页</h1>
                 <p>所有购买清单为</p>
             </div>
-        </div>
-        <div class="col-sm-10  col-md-10 col-sm-offset-1 col-md-offset-1">
             <div class="row">
                 <ul class="nav nav-tabs list-group-diy" role="tablist">
                     <li role="presentation" class="active list-group-item-diy"><a href="#unHandle" aria-controls="unHandle" role="tab" data-toggle="tab">待发货订单&nbsp;<span class="badge" id="unHandleCount">0</span></a></li>
@@ -132,10 +138,8 @@
         var receiveHTMLTemp = "";
         var allHTMLTemp = "";
         var bossId=${currentUser.id};
-        alert("在订单中欧冠");
         for(var i=0;i<allShoppingRecords.length;i++) {
             if(allShoppingRecords[i].shopId==bossId){
-                alert("所有订单的");
             var user = getUserById(allShoppingRecords[i].userId);
             var product = getProductById(allShoppingRecords[i].productId);
             allHTMLTemp += '<tr>' +
@@ -261,7 +265,6 @@
         });
 
         shoppingRecordProducts = eval("("+shoppingRecordProducts+")");
-        alert("在getAllShoppingRecords之后")
         return shoppingRecordProducts;
     }
 

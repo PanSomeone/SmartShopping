@@ -47,9 +47,12 @@ public class CardController {
     }
     @RequestMapping(value = "/Post", method = RequestMethod.POST)
     @ResponseBody
-    public void Post( int isopen,HttpSession httpSession) {
-      System.out.println(isopen);
-        httpSession.setAttribute("isopen",isopen);
+    public Map<String,Object> Post(int isopen, HttpSession httpSession) {
+        System.out.println("[CardController] 发贴开关=" + isopen);
+        httpSession.setAttribute("isopen", isopen);
+        Map<String,Object> result = new HashMap<>();
+        result.put("result", "success");
+        return result;
     }
 
 

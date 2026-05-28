@@ -1,13 +1,6 @@
-<!--<%--
-  Created by IntelliJ IDEA.
-  User: liu
-  Date: 2018/12/23
-  Time: 2:52
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="cp" value="${pageContext.request.contextPath}"/>-->
+<c:set var="cp" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -15,13 +8,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>购物+</title>
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
-    <link href="./css/style.css" rel="stylesheet">
+    <title>智购 - 登录</title>
+    <link href="${cp}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${cp}/css/style.css" rel="stylesheet">
 
-    <script src="./js/jquery.min.js" type="text/javascript"></script>
-    <script src="./js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="./js/layer.js" type="text/javascript"></script>
+    <script src="${cp}/js/jquery.min.js" type="text/javascript"></script>
+    <script src="${cp}/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="${cp}/js/layer.js" type="text/javascript"></script>
     <!--[if lt IE 9]>
     <script src="${cp}/js/html5shiv.min.js"></script>
     <script src="${cp}/js/respond.min.js"></script>
@@ -34,7 +27,7 @@
 <!-- 中间内容 -->
 <div class="container-fluid" style="padding-top: 80px;padding-bottom: 80px" >
 
-    <h1 class="title center">登录</h1>
+    <h1 class="title center">买家登录</h1>
     <br/>
     <div class="col-sm-offset-2 col-md-offest-2">
         <!-- 表单输入 -->
@@ -58,6 +51,13 @@
             </div>
         </div>
         <br/>
+        <div class="col-sm-offset-2 col-md-offset-2" style="margin-top: 20px;">
+            <p style="text-align: center;">
+                <a href="${cp}/managerLogin" style="color: var(--primary, #0d9488); margin-right: 20px;">👨‍💼 管理员登录</a>
+                <a href="${cp}/bossLogin" style="color: var(--primary, #0d9488); margin-right: 20px;">🏪 商家登录</a>
+                <a href="${cp}/register" style="color: var(--success, #10b981);">📝 注册新账号</a>
+            </p>
+        </div>
     </div>
 </div>
 
@@ -92,9 +92,8 @@
             window.location.href = "${cp}/main";
         }
         else if(loginResult == 'boss'){
-            layer.confirm('去商家那登录', {icon: 1, title:'你是商家',btn:['正确登录','算了吧']},
+            layer.confirm('您是商家账号，请前往商家登录', {icon: 1, title:'提示',btn:['前往商家登录','取消']},
                 function(){
-                    //此处要改
                     window.location.href = "${cp}/bossLogin";
                 },
                 function(index){
@@ -102,9 +101,8 @@
             );
         }
         else if(loginResult == 'vip'){
-            layer.confirm('去vip那登录', {icon: 1, title:'你是vip',btn:['正确登录','算了吧']},
+            layer.confirm('您是VIP账号，请前往VIP登录', {icon: 1, title:'提示',btn:['前往VIP登录','取消']},
                 function(){
-                    //此处要改
                     window.location.href = "${cp}/vipLogin";
                 },
                 function(index){

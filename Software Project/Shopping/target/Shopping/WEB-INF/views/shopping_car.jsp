@@ -26,14 +26,20 @@
 
 <!-- 中间内容 -->
 <div class="container-fluid bigHead">
-	<div class="row">
-		<div class="col-sm-10  col-md-10 col-sm-offset-1 col-md-offset-1">
-			<div class="jumbotron">
-				<h1>欢迎来到购物车</h1>
-				<p>您的购物车清单为</p>
-			</div>
-		</div>
-		<div class="col-sm-10  col-md-10 col-sm-offset-1 col-md-offset-1">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar sidebar-1">
+            <ul class="nav nav-sidebar">
+                <li class="list-group-item-diy"><a href="${cp}/main">🏠 返回首页</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/shopping_car" class="active">🛒 购物车</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/shopping_record">📋 我的订单</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/amend_info">⚙️ 修改资料</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="jumbotron">
+                <h1>欢迎来到购物车</h1>
+                <p>您的购物车清单为</p>
+            </div>
 			<table class="table table-hover center" id="shoppingCarTable">
 			</table>
 
@@ -126,7 +132,7 @@ function addCount(id) {
     var productCounts= document.getElementById("text"+productId);
     var counts = parseInt(productCounts.value);
     //alert(textId);
-    if(counts<${productDetail.counts})
+    if(counts<999)
         counts++;
     // productCounts.innerHTML = counts;
     productCounts.value=counts;
@@ -161,15 +167,13 @@ function addCount(id) {
                 layer.alert('添加失败');
             }
         });
-
-
+    }
 
     function judgeIsLogin() {
         if("${currentUser.id}" == null || "${currentUser.id}" == undefined || "${currentUser.id}" ==""){
             window.location.href = "${cp}/login";
         }
     }
-}
 
     function getShoppingCars() {
         judgeIsLogin();
@@ -233,12 +237,6 @@ function addCount(id) {
         });
         productResult = JSON.parse(productResult);
         return productResult;
-    }
-
-    function judgeIsLogin() {
-        if("${currentUser.id}" == null || "${currentUser.id}" == undefined || "${currentUser.id}" ==""){
-            window.location.href = "${cp}/login";
-        }
     }
 
     function buyConfirm(productsId,productsCounts) {
@@ -335,12 +333,10 @@ function addCount(id) {
 
     function addToShoppingRecordsPre(productsId,productsCounts) {
         for(var i=0;i<productsId.length;i++){
-            var product={};
-            product=getProductById(productsId[i]);
-            alert("bossId is addToShoppingRecordsPre"+product.bossId);
+            var product=getProductById(productsId[i]);
             addToShoppingRecords(productsId[i],productsCounts[i],product.bossId);
         }
-        layer.confirm('前往订单状态？', {icon: 1, title:'购买成功',btn:['前往订单','继续购买']},
+        layer.confirm('提交成功，前往订单状态？', {icon: 1, title:'购买成功',btn:['前往订单','继续购买']},
             function(){
                 window.location.href = "${cp}/shopping_record";
             },
@@ -353,7 +349,6 @@ function addCount(id) {
     function addToShoppingRecords(productId,productCounts,bossId) {
         judgeIsLogin();
         var shoppingRecord = {};
-        alert("bossId is addToShoppingRecords"+bossId);
         var shopId=bossId;
         shoppingRecord.userId = ${currentUser.id};
         shoppingRecord.productId = productId;

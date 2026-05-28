@@ -1,11 +1,10 @@
 package com.shopping.service;
 
+import java.util.List;
 import java.util.Map;
 
 public interface AiService {
-    // 简单的聊天接口，返回AI的回复
-    String chat(String message);
-    
-    // 获取推荐商品逻辑，返回推荐商品的ID
+    String chat(String message, List<Map<String, String>> history, int role);
+
     int recommendProduct();
 }

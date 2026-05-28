@@ -91,7 +91,7 @@
 		  var html = "";
 		  searchResultArea.innerHTML = "";
 		  for(var i=0;i<searchResult.length;i++){
-			  var imgURL = "${cp}/img/"+searchResult[i].id+".jpg";
+			  var imgURL = "${cp}/img/"+searchResult[i].img;
 			  html+= '<div class="col-sm-3 col-md-3 search-padding">'+
 					  '<div class="boxes pointer" onclick="productDetail('+searchResult[i].id+')">'+
 					  '<div class="big bigimg">'+

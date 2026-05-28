@@ -22,7 +22,7 @@
 </head>
 <body>
 <!--导航栏部分-->
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" id="mainNav">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -31,7 +31,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${cp}/main">智购</a>
+            <a class="navbar-brand" href="${cp}/main">🛒 智购</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -39,33 +39,30 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <c:if test="${empty currentUser}">
-                    <li><a href="${cp}/managerLogin"  >我是管理员</a></li>
-                    <li><a href="${cp}/register" methods="post">注册</a></li>
-                    <li><a href="${cp}/login" methods="post">买家登录</a></li>
-                    <li><a href="${cp}/bossLogin" methods="post">商家登录</a></li>
+                    <li><a href="${cp}/login"><span>🔑</span> 登录</a></li>
                 </c:if>
                 <c:if test="${not empty currentUser}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                ${currentUser.nickName}
+                            👤 ${currentUser.nickName}
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <c:if test="${currentUser.role == 0}">
-                                <li><a href="${cp}/shopping_car">购物车</a></li>
-                                <li><a href="${cp}/shopping_record">订单状态</a></li>
+                                <li><a href="${cp}/shopping_car">🛒 购物车</a></li>
+                                <li><a href="${cp}/shopping_record">📋 订单状态</a></li>
                             </c:if>
                             <c:if test="${currentUser.role == 1}">
-                                <li><a href="${cp}/shopping_handle">处理订单</a></li>
-                                <li><a href="${cp}/bossControl" methods="post">商品管理</a></li>
+                                <li><a href="${cp}/shopping_handle">📦 处理订单</a></li>
+                                <li><a href="${cp}/bossControl" methods="post">📊 商品管理</a></li>
                             </c:if>
                             <li role="separator" class="divider"></li>
-                            <li><a href="${cp}/amend_info">个人资料修改</a></li>
+                            <li><a href="${cp}/amend_info">⚙️ 个人资料修改</a></li>
                             <c:if test="${currentUser.role == 0}">
-                                <li><a href="${cp}/doLogout">退出登录</a></li>
+                                <li><a href="${cp}/doLogout">🚪 退出登录</a></li>
                             </c:if>
                             <c:if test="${currentUser.role == 1}">
-                                <li><a href="${cp}/doBossLogout">退出登录</a></li>
+                                <li><a href="${cp}/doBossLogout">🚪 退出登录</a></li>
                             </c:if>
                         </ul>
                     </li>
@@ -74,7 +71,7 @@
 
             <div class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="数据库" id="searchKeyWord"/>
+                    <input type="text" class="form-control" placeholder="🔍 搜索你想要的商品..." id="searchKeyWord"/>
                 </div>
                 <button class="btn btn-default" onclick="searchProduct();">查找商品</button>
             </div>
@@ -102,6 +99,15 @@
         if(searchResult == "success")
             window.location.href = "${cp}/search";
     }
+
+    // 导航栏滚动阴影效果
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 50) {
+            $('#mainNav').addClass('scrolled');
+        } else {
+            $('#mainNav').removeClass('scrolled');
+        }
+    });
 </script>
 
 </body>

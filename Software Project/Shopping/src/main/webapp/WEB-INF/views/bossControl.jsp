@@ -43,8 +43,12 @@
         <!-- 控制栏 -->
         <div class="col-sm-3 col-md-2 sidebar sidebar-1">
             <ul class="nav nav-sidebar">
-                <li class="list-group-item-diy"><a href="#section2">我家商品</a></li>
-                <li class="list-group-item-diy"><a href="#section3">上新货啦</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/main">🏠 返回首页</a></li>
+                <li class="list-group-item-diy"><a href="#section2">📦 我家商品</a></li>
+                <li class="list-group-item-diy"><a href="#section3">➕ 上新货</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/shopping_handle">📋 处理订单</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/amend_info">⚙️ 修改资料</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/doBossLogout">🚪 退出登录</a></li>
             </ul>
         </div>
         <!-- 控制内容 -->

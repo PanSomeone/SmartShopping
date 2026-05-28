@@ -44,9 +44,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <c:if test="${empty currentUser}">
-                    <li><a href="${cp}/register" methods="post">注册</a></li>
-                    <li><a href="${cp}/login" methods="post">买家登录</a></li>
-                    <li><a href="${cp}/bossLogin" methods="post">商家登录</a></li>
+                    <li><a href="${cp}/login">登录</a></li>
                 </c:if>
                 <c:if test="${not empty currentUser}">
                     <li class="dropdown">

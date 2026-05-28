@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>购物+</title>
+    <title>智购</title>
     <link href="${cp}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${cp}/css/style.css" rel="stylesheet">
 
@@ -27,13 +27,19 @@
 <!-- 中间内容 -->
 <div class="container-fluid bigHead">
     <div class="row">
-        <div class="col-sm-10  col-md-10 col-sm-offset-1 col-md-offset-1">
+        <div class="col-sm-3 col-md-2 sidebar sidebar-1">
+            <ul class="nav nav-sidebar">
+                <li class="list-group-item-diy"><a href="${cp}/main">🏠 返回首页</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/shopping_car">🛒 购物车</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/shopping_record" class="active">📋 我的订单</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/amend_info">⚙️ 修改资料</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="jumbotron">
                 <h1>欢迎来到订单页</h1>
                 <p>您的购买清单为</p>
             </div>
-        </div>
-        <div class="col-sm-10  col-md-10 col-sm-offset-1 col-md-offset-1">
             <div class="row">
                 <ul class="nav nav-tabs list-group-diy" role="tablist">
                     <li role="presentation" class="active list-group-item-diy"><a href="#unHandle" aria-controls="unHandle" role="tab" data-toggle="tab">待发货订单&nbsp;<span class="badge" id="unHandleCount">0</span></a></li>
@@ -128,9 +134,6 @@
         var transportHTMLTemp = "";
         var receiveHTMLTemp = "";
         var allHTMLTemp = "";
-        for(var i=0;i<allShoppingRecords.length;i++){
-            alert("用户买的商品id为"+allShoppingRecords[i].productId);
-        }
         for(var i=0;i<allShoppingRecords.length;i++){
 
             var product = getProductById(allShoppingRecords[i].productId);
@@ -255,14 +258,6 @@
         });
 
         shoppingRecordProducts = eval("("+shoppingRecordProducts+")");
-        for(var i=0;i<shoppingRecordProducts.length;i++){
-            alert("在getShoppingRecords从RecordsController返回之后ProductId productId,userId(买家),shopId(卖家)是：" +
-                " is "+shoppingRecordProducts[i].productId+" "+shoppingRecordProducts[i].userId+" "
-                +shoppingRecordProducts[i].shopId+" "+shoppingRecordProducts[i].counts+" "+shoppingRecordProducts[i].productPrice+" "
-                +shoppingRecordProducts[i].orderStatus+" "+shoppingRecordProducts[i].time);
-
-        }
-
         return shoppingRecordProducts;
     }
 

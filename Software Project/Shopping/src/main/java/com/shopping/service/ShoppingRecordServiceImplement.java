@@ -43,12 +43,6 @@ public class ShoppingRecordServiceImplement implements ShoppingRecordService {
 
     @Override
     public List<ShoppingRecord> getShoppingRecords(int userId) {
-
-        List<ShoppingRecord> shoppingRecordList=shoppingRecordDao.getShoppingRecords(userId);
-        shoppingRecordList.forEach(e->{
-            System.out.println("在Service中的productId,userId(买家),shopId(卖家)是："+e.getProductId()+"  "
-                    +e.getUserId()+" "+e.getShopId()+" "+e.getTime()+" "+e.getProductPrice()+" "+e.getCounts()+e.getOrderStatus());
-        });
         return shoppingRecordDao.getShoppingRecords(userId);
     }
 

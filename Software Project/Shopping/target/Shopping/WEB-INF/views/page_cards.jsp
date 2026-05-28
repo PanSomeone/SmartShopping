@@ -154,7 +154,7 @@
                     var html="";
                     productArea.innerHTML = '';
                     for(var i=0;i<allProduct.length;i++){
-                        var imgURL = "${cp}/img/"+allProduct[i].id+".jpg";
+                        var imgURL = "${cp}/img/"+allProduct[i].img;
                         html+='<div class="col-sm-4 col-md-4 pd-5">'+
                             '<div class="boxes">'+
                             '<div class="big bigimg">'+

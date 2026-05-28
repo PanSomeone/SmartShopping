@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>购物+</title>
+    <title>智购</title>
     <link href="${cp}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${cp}/css/style.css" rel="stylesheet">
 
@@ -32,14 +32,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${cp}/main">购物+</a>
+            <a class="navbar-brand" href="${cp}/main">智购</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
             <ul class="nav navbar-nav navbar-right">
-                <li> <a  href="#" onclick="enablePost();return false;">开启发帖功能</a></li>
-                <li><a  href="#" onclick="unablePost();return false;">关闭发帖功能</a></li>
-                <li><a href="${cp}/main"  >退出</a></li>
+                <li><a href="${cp}/main">退出</a></li>
             </ul>
         </div>
     </div>
@@ -50,11 +48,14 @@
         <!-- 控制栏 -->
         <div class="col-sm-3 col-md-2 sidebar sidebar-1">
             <ul class="nav nav-sidebar">
-                <li class="list-group-item-diy"><a href="#section1">查看商家<span class="sr-only">(current)</span></a></li>
-                <li class="list-group-item-diy"><a href="#section2">查看买家<span class="sr-only">(current)</span></a></li>
-                <li class="list-group-item-diy"><a href="#section3">查看vip<span class="sr-only">(current)</span></a></li>
-                <li class="list-group-item-diy"><a href="#section4">查看帖子</a></li>
-
+                <li class="list-group-item-diy"><a href="${cp}/main">🏠 返回首页</a></li>
+                <li class="list-group-item-diy"><a href="#section1">👤 查看商家</a></li>
+                <li class="list-group-item-diy"><a href="#section2">👤 查看买家</a></li>
+                <li class="list-group-item-diy"><a href="#section3">👑 查看VIP</a></li>
+                <li class="list-group-item-diy"><a href="#section4">📝 查看帖子</a></li>
+                <li class="list-group-item-diy"><a href="#" onclick="enablePost();return false;">✅ 开启发帖</a></li>
+                <li class="list-group-item-diy"><a href="#" onclick="unablePost();return false;">❌ 关闭发帖</a></li>
+                <li class="list-group-item-diy"><a href="${cp}/main">🚪 退出</a></li>
             </ul>
         </div>
         <!-- 控制内容 -->
@@ -271,7 +272,6 @@
     }
 
     function deleteCard(id) {
-        alert("进入delteCard（）")
         var card = {};
         card.id = id;
         var deleteResult = "";
@@ -402,44 +402,19 @@
             }}
         );
     }
-  function  enablePost(){
-        var isopen=1;
-      $.ajax({
-          async : false,
-          type : 'POST',
-          url : '${cp}/Post',
-          data : isopen,
-          dataType : 'json',
-          success : function(result) {
-              addResult = result.result;
-          },
-          error : function(result) {
-
-          }
-      });
-      if(addResult == "success") {
-
-      }
-  }
-    function  unablePost(){
-        alert("hello")
-        var isopen=0;
+    function enablePost(){
         $.ajax({
-            async : false,
-            type : 'POST',
-            url : '${cp}/Post',
-            data : isopen,
-            dataType : 'json',
-            success : function(result) {
-                addResult = result.result;
-            },
-            error : function(result) {
-
-            }
+            async:false, type:'POST', url:'${cp}/Post',
+            data:{isopen:1}, dataType:'json',
+            success:function(r){ if(r.result==='success') layer.msg('发贴功能已开启'); }
         });
-        if(addResult == "success") {
-
-        }
+    }
+    function unablePost(){
+        $.ajax({
+            async:false, type:'POST', url:'${cp}/Post',
+            data:{isopen:0}, dataType:'json',
+            success:function(r){ if(r.result==='success') layer.msg('发贴功能已关闭'); }
+        });
     }
 </script>
 </body>

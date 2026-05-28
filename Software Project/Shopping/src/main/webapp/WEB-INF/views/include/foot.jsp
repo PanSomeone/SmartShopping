@@ -20,11 +20,9 @@
 </head>
 <body>
     <!-- 尾部 -->
-    <hr/>
     <div class="foot-style">
-        本项目基于github的https://github.com/junyi-tiger/Shopping开发制作，感谢你的开源！
-        <br/>
-        <p><a href="${cp}/WEB-INF/views/bossLogin.jsp" target="_blank" style="color: #007bff;">我是商家</a></p>
+        <p style="margin-bottom:6px;">🛒 智购 SmartShopping &copy; 2026</p>
+        <p style="font-size:12px; opacity:0.7;">基于开源项目 <a href="https://github.com/junyi-tiger/Shopping" target="_blank">Shopping</a> 开发制作，感谢开源社区！</p>
     </div>
     <!-- 结束啦 -->
 
