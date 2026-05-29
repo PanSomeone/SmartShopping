@@ -120,11 +120,23 @@ public class ProductController {
     @RequestMapping(value = "/getProductById", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> getProductById(int id) {
-        Product product = productService.getProduct(id);
-        System.out.println("在ProductCOntroller 里面 product is "+product.getName());
-        String result = JSON.toJSONString(product);
-        Map<String,Object> resultMap = new HashMap<String,Object>();
-        resultMap.put("result",result);
+        Map<String,Object> resultMap = new HashMap<>();
+        try {
+            Product product = productService.getProduct(id);
+            if (product != null) {
+                Map<String,Object> p = new HashMap<>();
+                p.put("id", product.getId());
+                p.put("name", product.getName());
+                p.put("price", product.getPrice());
+                p.put("type", product.getType());
+                p.put("img", product.getImg());
+                resultMap.put("result", JSON.toJSONString(p));
+            } else {
+                resultMap.put("result", "{}");
+            }
+        } catch (Exception e) {
+            resultMap.put("result", "{}");
+        }
         return resultMap;
     }
 

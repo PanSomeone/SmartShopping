@@ -30,10 +30,6 @@ public class ProductServiceImplement implements ProductService {
 
     @Override
     public Product getProduct(int id) {
-        System.out.println("在Product Service里面发斯蒂芬是");
-        Product i=new Product();
-        i=productDao.getProduct(id);
-        System.out.println("product is "+i.getName());
         return productDao.getProduct(id);
     }
 

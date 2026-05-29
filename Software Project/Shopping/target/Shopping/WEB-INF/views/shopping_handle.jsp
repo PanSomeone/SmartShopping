@@ -269,23 +269,24 @@
     }
 
     function getProductById(id) {
-        var productResult = "";
+        var productResult = "{}";
         var product = {};
         product.id = id;
         $.ajax({
-            async : false, //设置同步
+            async : false,
             type : 'POST',
             url : '${cp}/getProductById',
             data : product,
             dataType : 'json',
             success : function(result) {
-                productResult = result.result;
+                productResult = result.result||"{}";
             },
             error : function(result) {
-                layer.alert('getProductById查询错误');
+                productResult = "{}";
             }
         });
-        productResult = JSON.parse(productResult);
+        try { productResult = JSON.parse(productResult); } catch(e) { productResult = null; }
+        if(!productResult||!productResult.name) productResult={name:'商品已下架',price:0};
         return productResult;
     }
 

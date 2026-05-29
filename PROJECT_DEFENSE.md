@@ -260,12 +260,11 @@ SpeechController → SpeechServiceImplement
 
 ### Q: 商品轮播是如何实现的？
 
-- **60fps 连续动画**：`requestAnimationFrame` 每帧 `scrollLeft += speed`
-- **左右渐变遮罩**：`::before`/`::after` 伪元素从背景色渐变到透明
-- **半卡边缘**：Track 内边距 60px，首尾卡片始终露半截
-- **无限循环**：克隆卡片填满 2x 容器宽度，滚动超过原始宽度瞬间归零
-- **交互暂停**：触摸/点击暂停 2 秒，滚轮暂停 1.5 秒
-- **错落有致**：偶数行右流、奇数行左流
+- **60fps 连续动画**：`requestAnimationFrame` 每帧 `scrollLeft += speed`，摒弃传统 `setInterval` 逐张跳跃
+- **左右渐变遮罩**：`::before`/`::after` 伪元素从背景色渐变到透明，卡片进出边缘时自然淡入淡出
+- **半卡边缘**：Track 内边距 60px，首尾卡片始终露半截，提示用户有更多内容
+- **无限循环**：克隆卡片填满 2x 容器宽度，scrollLeft 越过原始宽度时瞬间归零，裸眼无感知
+- **错落有致**：偶数行右流、奇数行左流，各行初始偏移不同
 
 ## 5. 项目 Q&A 问答
 

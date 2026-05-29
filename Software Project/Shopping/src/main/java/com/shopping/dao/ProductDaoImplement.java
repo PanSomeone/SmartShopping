@@ -19,11 +19,8 @@ public class ProductDaoImplement implements ProductDao {
     @Override
     public Product getProduct(int id) {
         String hql = "from Product where id=?";
-        System.out.println("现在在ProductDao里面啊啊啊啊啊");
         Query query = sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter(0, id);
-        Product product=(Product) query.uniqueResult();
-        System.out.println("在ProduDao里面 product Name is（也就是真正查询出来的东西） "+product.getName());
         return (Product) query.uniqueResult();
     }
 

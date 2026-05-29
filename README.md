@@ -123,8 +123,15 @@ private static final String SECRET_KEY = "你的百度 Secret Key";
 
 ### 4. 编译打包
 
+**方式一：IDEA 内置 Maven（推荐）**
+
+1. 打开右侧 Maven 工具窗口
+2. Lifecycle → 双击 `clean`，完成后双击 `package`
+3. 或直接 **Build → Rebuild Project**（Ctrl+Shift+F9），IDEA 会自动编译并更新部署
+
+**方式二：命令行**
+
 ```bash
-# 在项目根目录执行
 mvn clean package
 ```
 
@@ -222,6 +229,10 @@ Shopping/
 ### Q: AI 周报为什么打不开或显示失败？
 
 确认已登录后再查看周报。如果 AI 服务不可用，周报会自动使用本地统计兜底数据（仍可看到购买总量、品类分布等），不会完全空白。
+
+### Q: 打开订单状态页面显示商品查询错误或卡住？
+
+说明后端 class 文件未更新。在 IDEA 中执行 **Build → Rebuild Project**，然后重新部署。如果仍有问题，确认数据库中对应订单的商品未被删除。
 
 ### Q: 数据库表已存在怎么办？
 
